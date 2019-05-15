@@ -1,7 +1,7 @@
 [package]
 name = "wasmpack_webpack_example"
 version = "0.0.1"
-authors = ["Aleksey Krasnobaev"]
+authors = ["Aleksey Krasnobaev <alekseykrasnobaev@gmail.com>"]
 description = ""
 repository = ""
 license = ""

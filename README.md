@@ -1,100 +1,62 @@
-# examples of rust wasm building tools usage
-
-This repository contains five examples of loading rust code to web application via compiling to WebAssembly.
-All examples based on different bundlers and plugins.
-
-## overview
-
-### status
-
-Sizes info is taken from the Finder. Build time is taken from terminal logs with exception of webpack which is arbitrary.
-
-All examples provide calculation in rust and showing result in DOM.
-
-Examples which use `wasm-bindgen` call `alert` function from JS in Rust.
-
-Webpack example shows additional example of writting to DOM from Rust via `web-sys`.
-
-|plugin                 |project size  |dist size/zip|deps in Cargo.toml + build time                     |status|
-|-----------------------|--------------|-------------|----------------------------------------------------|------|
-|parcel-plugin-cargo-web|87MiB         |1.4MiB/416KiB|no deps in Cargo.toml - ✨  Built in 3.87s.         |OK    |
-|parcel-plugin-rustwasm |108MiB        |43KiB/17KiB  |wasm-bindgen          - ✨  Built in 124.13s.       |OK    |
-|parcel-plugin-wasm.rs  |110MiB        |42KiB/17KiB  |wasm-bindgen          - ✨  Built in 95.29s.        |OK    |
-|rollup-plugin-rust     |10MiB         |220KiB/35KiB |no deps in Cargo.toml - created dist/index.js in 2s|Require additional steps and revise, see section below|
-|wasm-pack via webpack  |392.4MiB      |3.4MiB/975KiB|wasm-bindgen, web-sys - 68s                        |OK    |
-
-### features
-
-|plugin                 |livereload|async load|import .rs|import .toml|
-|-----------------------|----------|----------|----------|------------|
-|parcel-plugin-cargo-web|JS        |YES       |sync/async|NO          |
-|parcel-plugin-rustwasm |JS        |YES       |sync/async|NO          |
-|parcel-plugin-wasm.rs  |JS        |NO        |sync      |sync        |
-|rollup-plugin-rust     |Won't Work|YES       |async     |NO          |
-|wasm-pack via webpack  |JS/Rust   |YES<sup>*</sup>|NO   |NO          |
-
-<sup>*</sup> webpack require loading of compiled wasm binary
-
-## examples info
-
-All examples require global installation of `Rust` and `Cargo`. Some require `wasm-pack`.
-
-### [parcel-plugin-cargo-web](https://www.npmjs.com/package/parcel-plugin-cargo-web) via [parcel-bundler](https://parceljs.org)
-
-Initial example - https://github.com/koute/parcel-plugin-cargo-web/tree/master/example
-
-See also - https://github.com/koute/stdweb/tree/master/examples/hasher-parcel
+## deployment
 
 ```bash
-npm i
-npm run start
+npm run build
+node -e "require('gh-pages').publish('dist', (err) => console.log(err))"
 ```
 
-### [parcel-plugin-rustwasm](https://www.npmjs.com/package/parcel-plugin-rustwasm) via [parcel-bundler](https://parceljs.org)
+## roadmap
 
-Initial example - https://github.com/proteamer/parcel-plugin-rustwasm/tree/master/example
+### OSC
 
-```bash
-npm i
-npm run start
-```
+- [x] feat: osc amp
+- [x] feat: main amp
+- [ ] feat[ADSR]: initial implementation
+- [ ] refactor: osc as rust class
+- [ ] feat: add/remove osc
+- [ ] feat: osc instantiation and mixing into main
+- [ ] feat[osc]: LFO inital implementation
+- [ ] feat[osc]: pan
+- [ ] feat[osc]: superwave synthesis
+- [ ] feat[osc]: wave-table synthesis
+- [ ] feat[osc]: plucked synthesis
 
-### [parcel-plugin-wasm.rs](https://www.npmjs.com/package/parcel-plugin-wasm.rs) via [parcel-bundler](https://parceljs.org)
+### routing
 
-Initial example - https://github.com/catsigma/parcel-plugin-wasm.rs
+- [ ] feat: FM8-like matrix
 
-```bash
-npm i
-npm run start
-```
+### MIDI
 
-### [rollup-plugin-rust](https://www.npmjs.com/package/rollup-plugin-rust) via [rollup](http://rollupjs.org)
+- [ ] on-screen keyboard
+- [ ] feat[input]: octave shift +1/-1
+- [ ] feat[input]: MIDI controller support (main vol, +1/-1 note/octave shift)
 
-Initial example - https://github.com/DrSensor/rollup-plugin-rust/tree/master/examples/node_wasm
+### FX bank
 
-```bash
-npm i
-npm run start
-<CTRL>+C
-#add 'window.global = window;' as first line of dist/index.js
-#change 'Buffer' to 'Buffer$1' in dist/index.js
-npm run start
-```
+- [ ] fx[reverb]: initial implementation
+- [ ] fx[lp filter]: initial implementation
+- [ ] fx[bp filter]: initial implementation
+- [ ] fx[hp filter]: initial implementation
 
-### [@wasm-tool/wasm-pack-plugin](https://www.npmjs.com/package/@wasm-tool/wasm-pack-plugin) via [webpack](https://webpack.js.org)
+### note editor
 
-[MOVE TO NEXT EXAMPLE] Initial example - https://github.com/rustwasm/wasm-bindgen/tree/master/examples/add
+- [ ] feat: step editor
+- [ ] feat: .midi format import/export
 
-See also - https://github.com/wasm-tool/wasm-pack-plugin/tree/master/example
+### presets
 
-```bash
-npm i
-cargo build --target wasm32-unknown-unknown --release
-npm run start
-```
+- [ ] feat: store osc config in local storage
+- [ ] feat: preset support import/export
+- [ ] feat: bank editor
+- [ ] feat: preset-randomizer
+- [ ] feat: undo/redo
 
-## see also
+### VST-support
 
-Project templates by Rust and WebAssembly working groups - https://rustwasm.github.io/book/reference/project-templates.html
+- [ ] feat: export project as VST-plugin
 
-Stencil - https://github.com/DrSensor/example-stencil-rust
+### …in the distance of light-year
+
+- [ ] decentralised collaborative sequencer
+- [ ] GAN-based synthesis
+- [ ] …
