@@ -1,6 +1,7 @@
 ## deployment
 
 ```bash
+npm i && yarn # due to jquery-knob package conflicts
 npm run build
 node -e "require('gh-pages').publish('dist', (err) => console.log(err))"
 ```
